@@ -1,0 +1,74 @@
+<mxfile host="app.diagrams.net" modified="2026-04-29T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="judge-pipeline" name="Judge Pipeline">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="submit" value="POST /api/submissions&#xa;problem_id + cpp source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="250" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="route" value="judge_routes.cpp&#xa;校验语言和源码大小" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="380" y="80" width="250" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="create" value="JudgeRepository::createSubmission()&#xa;status = queued" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="700" y="80" width="300" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="dbq" value="submissions queue&#xa;idx_submissions_status" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="70" width="240" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker" value="judge_worker.exe&#xa;循环 processNextSubmission()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="290" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="fetch" value="fetchNextQueuedSubmission()&#xa;取一条 queued 并进入 judging" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="390" y="290" width="300" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="config" value="加载 config + test cases&#xa;getConfig()&#xa;listJudgingTestCases()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="290" width="300" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="compile" value="SandboxRunner::compile()&#xa;Docker 或 Local" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="290" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="compileDecision" value="compile success?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1165" y="440" width="210" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="ce" value="CE 或 JE&#xa;complete/fail submission&#xa;recordRejectedSubmission()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="640" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="run" value="逐个测试点 run()&#xa;超时/输出限制/退出码" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="800" y="640" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="compare" value="compareOutputs()&#xa;exact / trim_trailing&#xa;ignore_whitespace / float_epsilon" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="450" y="640" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="result" value="insertSubmissionResult()&#xa;首个非 AC 决定 final verdict" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="110" y="640" width="280" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="complete" value="completeSubmission()&#xa;写 score / verdict / time / memory" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="110" y="800" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="progress" value="recordAcceptedSubmission()&#xa;或 recordRejectedSubmission()&#xa;回写题目和计划 item 状态" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="470" y="800" width="310" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="cleanup" value="删除临时工作目录&#xa;worker 继续下一轮" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="870" y="805" width="260" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="submit" target="route"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="route" target="create"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="create" target="dbq"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="poll" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="worker" target="fetch"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="fetch" target="config"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="config" target="compile"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="compile" target="compileDecision"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="no" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="compileDecision" target="ce"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="compileDecision" target="run"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="run" target="compare"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="compare" target="result"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="result" target="complete"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="complete" target="progress"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="progress" target="cleanup"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="ce" target="cleanup"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

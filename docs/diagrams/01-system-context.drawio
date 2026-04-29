@@ -1,0 +1,50 @@
+<mxfile host="app.diagrams.net" modified="2026-04-29T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="system-context" name="System Context">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="frontend" value="Frontend / API Client&#xa;浏览器、k6、调试工具" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="180" width="220" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="api" value="API Server&#xa;Algorithm_Training_Planner.exe&#xa;src/main.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="420" y="160" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker" value="Judge Worker&#xa;judge_worker.exe&#xa;src/judge_worker_main.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="420" y="410" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="db" value="PostgreSQL&#xa;业务表 + Judge 表&#xa;sql/001_schema.sql&#xa;sql/003_judge.sql" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="830" y="230" width="240" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="docker" value="Docker / Local Sandbox&#xa;编译运行 C++&#xa;src/judge/sandbox_runner.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="830" y="500" width="250" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="core" value="backend_core 静态库&#xa;api / service / repository / algorithms / judge / db / domain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="380" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="HTTP JSON&#xa;/api/*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="frontend" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="CRUD / 计划保存 / 提交入队" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="api" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="轮询 queued submission&#xa;写回 verdict / progress" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="worker" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="compile / run" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="worker" target="docker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="链接" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="api" target="core">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="链接" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="worker" target="core">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="note" value="设计重点：HTTP 入口和耗时评测拆成两个进程，&#xa;通过 PostgreSQL 队列表和共享 backend_core 协作。" style="shape=note;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="560" width="300" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

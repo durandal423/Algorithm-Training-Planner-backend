@@ -1,0 +1,62 @@
+<mxfile host="app.diagrams.net" modified="2026-04-29T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="training-plan-generation" name="Training Plan Generation">
+    <mxGraphModel dx="1300" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="req" value="POST /api/training-plans/generate&#xa;goal_id 或直接目标字段" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="90" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="route" value="routes.cpp&#xa;解析 JSON&#xa;handleJson()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="220" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="service" value="TrainingPlanService::generateTrainingPlan()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="680" y="90" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="goal" value="goalFromGenerateRequest()&#xa;getTrainingGoal() + applyGoalOverrides()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="250" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="validate" value="validate_goal_for_planning()&#xa;count/time/difficulty/weights" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="715" y="390" width="210" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="load" value="AppRepository::listAllProblems()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="250" width="260" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="window" value="selectStableDifficultyWindow()&#xa;过滤 + 排序 + 双指针窗口" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="390" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="dp" value="optimizeTrainingPlanByDP()&#xa;dp[t][k][mask] 选最终题目" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="540" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="summary" value="algorithm_summary JSON&#xa;goal + candidate_window + dp_result" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="560" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="save" value="AppRepository::saveTrainingPlan()&#xa;training_plans + training_plan_items" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="370" y="560" width="270" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="read" value="getTrainingPlanItems(plan_id)&#xa;读回持久化 item id/status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="370" y="720" width="270" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="resp" value="JSON Response&#xa;plan_id&#xa;candidate_window&#xa;dp_result&#xa;items" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="710" width="240" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="db" value="PostgreSQL" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="710" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="req" target="route"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="route" target="service"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="service" target="goal"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="goal" target="validate"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="valid" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="validate" target="load"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="all problems" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="load" target="window"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="CandidateWindow" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="window" target="dp"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="TrainingPlanResult" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="dp" target="summary"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="persist" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="summary" target="save"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="insert/select" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="save" target="db"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="save" target="read"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="read" target="resp"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

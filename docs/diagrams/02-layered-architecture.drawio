@@ -1,0 +1,74 @@
+<mxfile host="app.diagrams.net" modified="2026-04-29T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="layered-architecture" name="Layered Architecture">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="entry" value="Entrypoints&#xa;src/main.cpp&#xa;src/judge_worker_main.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="520" y="40" width="300" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="api" value="API Layer&#xa;include/api/*&#xa;src/api/routes.cpp&#xa;src/api/judge_routes.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="160" y="190" width="300" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="service" value="Service Layer&#xa;TrainingPlanService&#xa;JudgeService" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="520" y="190" width="300" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="json" value="JSON Adapters&#xa;json_utils.cpp&#xa;judge_json.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="880" y="190" width="260" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="alg" value="Algorithm Layer&#xa;window_selector.cpp&#xa;training_dp.cpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="160" y="380" width="300" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="repo" value="Repository Layer&#xa;AppRepository&#xa;JudgeRepository" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="520" y="380" width="300" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="judge" value="Judge Infra&#xa;SandboxRunner&#xa;OutputComparator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6d0de;strokeColor=#996185;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="880" y="380" width="260" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="db" value="DB Infra&#xa;Database&#xa;SchemaInitializer&#xa;ConnectionPool / Lease" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="520" y="570" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="sql" value="SQL Schema&#xa;sql/001_schema.sql&#xa;sql/003_judge.sql" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#666666;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="530" y="760" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="domain" value="Domain Models&#xa;include/domain/models.hpp&#xa;include/domain/judge_models.hpp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#666666;dashed=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="160" y="570" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="register / run" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="entry" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="construct / call" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="entry" target="service">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="route delegates" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="api" target="service">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="toJson / fromJson" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="api" target="json">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="plan algorithms" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="service" target="alg">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="persistence" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="service" target="repo">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="compile/run/compare" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="service" target="judge">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="acquire connection" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="repo" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="initialize / migrate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="db" target="sql">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="uses" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="alg" target="domain">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="uses" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=block;endFill=1;" edge="1" parent="1" source="repo" target="domain">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

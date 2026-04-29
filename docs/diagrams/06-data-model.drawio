@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" modified="2026-04-29T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="data-model" name="Data Model">
+    <mxGraphModel dx="1500" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="users" value="users&#xa;id PK&#xa;username" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="190" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="problems" value="problems&#xa;id PK&#xa;problem_code UNIQUE&#xa;difficulty / estimated_minutes&#xa;is_completed / wrong_count" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="60" width="250" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="tags" value="tags&#xa;id PK&#xa;name UNIQUE&#xa;mastery_score&#xa;wrong_count" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="60" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="problem_tags" value="problem_tags&#xa;problem_id FK&#xa;tag_id FK&#xa;PK(problem_id, tag_id)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="600" y="240" width="250" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="goals" value="training_goals&#xa;id PK&#xa;user_id FK nullable&#xa;target_count / time_budget&#xa;weights / preferences" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="260" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="goal_tags" value="training_goal_tags&#xa;goal_id FK&#xa;tag_id FK&#xa;PK(goal_id, tag_id)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="410" y="420" width="250" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="plans" value="training_plans&#xa;id PK&#xa;goal_id FK nullable&#xa;candidate_count / selected_count&#xa;total_score / status&#xa;algorithm_summary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="270" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="items" value="training_plan_items&#xa;id PK&#xa;plan_id FK&#xa;problem_id FK&#xa;score / selected_reason&#xa;item_status&#xa;last_submission_id / last_training_record_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="410" y="560" width="300" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="records" value="training_records&#xa;id PK&#xa;plan_id FK nullable&#xa;problem_id FK nullable&#xa;is_finished / is_first_try_ac&#xa;actual_minutes / error_type&#xa;duration_source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="780" width="290" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="sessions" value="training_sessions&#xa;id PK&#xa;plan_id FK nullable&#xa;plan_item_id FK nullable&#xa;problem_id FK&#xa;status running/paused/...&#xa;created_record_id FK nullable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="430" y="800" width="300" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="configs" value="judge_configs&#xa;id PK&#xa;problem_id UNIQUE FK&#xa;language cpp&#xa;limits / compare_mode&#xa;official_solution / checker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="60" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="cases" value="judge_test_cases&#xa;id PK&#xa;problem_id FK&#xa;input_data / expected_output&#xa;visibility / points&#xa;order_index" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="270" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="subs" value="submissions&#xa;id PK&#xa;problem_id FK&#xa;user_id FK nullable&#xa;status / verdict / score&#xa;source_code&#xa;compile output / max time" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="520" width="290" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="subresults" value="submission_results&#xa;id PK&#xa;submission_id FK&#xa;test_case_id FK nullable&#xa;verdict / time / memory&#xa;stdout_sample / stderr_sample" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="790" width="300" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="M:N" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="problem_tags"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="M:N" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="tags" target="problem_tags"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="user_id" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="users" target="goals"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="goal_id SET NULL" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="goals" target="plans"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="M:N" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="goals" target="goal_tags"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="M:N" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="tags" target="goal_tags"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="1:N CASCADE" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="plans" target="items"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="problem_id" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="items"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="plan_id SET NULL" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="plans" target="records"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="problem_id" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="records"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="active timer" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="items" target="sessions"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="created_record_id" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="sessions" target="records"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" value="1:1 config" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="configs"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" value="1:N cases" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="cases"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" value="1:N submissions" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="problems" target="subs"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" value="user_id nullable" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="users" target="subs"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" value="1:N results" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="subs" target="subresults"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e18" value="test_case_id SET NULL" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" edge="1" parent="1" source="cases" target="subresults"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

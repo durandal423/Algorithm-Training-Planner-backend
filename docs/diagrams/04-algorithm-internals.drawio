@@ -1,0 +1,125 @@
+<mxfile host="65bd71144e">
+    <diagram id="algorithm-internals" name="Algorithm Internals">
+        <mxGraphModel dx="1325" dy="659" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title1" value="滑动窗口候选池 selectStableDifficultyWindow()" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="80" y="40" width="520" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="title2" value="状态压缩 DP optimizeTrainingPlanByDP()" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="840" y="40" width="520" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="w1" value="输入 problems + TrainingGoal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="110" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="w2" value="filtered_sorted()&#xa;按 difficulty 过滤并排序" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="230" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="w3" value="available_goal_tags()&#xa;只要求题库中存在的目标标签" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="230" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="w4" value="右指针扩张&#xa;add_problem(WindowStats)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="370" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="w5" value="valid_window?&#xa;size &gt;= desired count&#xa;覆盖所有 available tags" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="350" width="230" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="w6" value="better_window()&#xa;跨度小、覆盖多、错题/薄弱优先" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="520" width="260" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="w7" value="左指针收缩&#xa;remove_problem(WindowStats)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="525" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="w8" value="输出 CandidateWindow&#xa;candidates / covered_tags / span" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="700" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1" value="输入 CandidateWindow.candidates + TrainingGoal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="110" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2" value="limit_candidates()&#xa;按 score 取最多 80 题&#xa;再恢复原窗口顺序" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="230" width="320" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3" value="core_tags()&#xa;目标标签优先，最多 8 个&#xa;补充高优先级薄弱标签" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1220" y="230" width="300" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="d4" target="d5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d4" value="scoreProblemForGoal()&#xa;目标标签 + 错题 + 薄弱标签&#xa;- 难度偏移 - 耗时惩罚" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="380" width="320" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="d5" value="DP 状态&#xa;dp[t][k][mask] = best score&#xa;State 记录 selected bitset" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1220" y="380" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="d6" value="倒序枚举 time/count&#xa;new_mask = old_mask | problem_mask" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="550" width="320" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="d7" value="选择最终 best state&#xa;score 高优先&#xa;count 多、覆盖多作为 tie-breaker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1220" y="550" width="300" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="d8" value="result_from_state()&#xa;恢复 SelectedProblem&#xa;生成 selected_reason" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="720" width="320" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="we1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w1" target="w2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w2" target="w4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w3" target="w5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w4" target="w5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we5" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;exitX=0;exitY=1;exitDx=0;exitDy=0;" parent="1" source="w5" target="w6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="453" y="480"/>
+                            <mxPoint x="210" y="480"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="we6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w6" target="w7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we7" value="继续收缩" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w7" target="w5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="we8" value="扫描完成" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="w7" target="w8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d1" target="d2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d1" target="d3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d2" target="d4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d3" target="d5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d4" target="d6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d5" target="d6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1370" y="500"/>
+                            <mxPoint x="1000" y="500"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="de7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d6" target="d7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de8" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endFill=1;strokeWidth=2;" parent="1" source="d7" target="d8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
