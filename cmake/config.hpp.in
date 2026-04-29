@@ -1,0 +1,14 @@
+#pragma once
+
+namespace config {
+
+inline constexpr char DATABASE_HOST[] = "@DATABASE_HOST@";
+inline constexpr char DATABASE_PORT[] = "@DATABASE_PORT@";
+inline constexpr char DATABASE_USER[] = "@DATABASE_USER@";
+inline constexpr char DATABASE_PASSWORD[] = "@DATABASE_PASSWORD@";
+inline constexpr char DATABASE_NAME[] = "@DATABASE_NAME@";
+inline constexpr char BACKEND_SOURCE_DIR[] = "@CMAKE_SOURCE_DIR@";
+inline constexpr int SERVER_PORT = 8080;
+inline constexpr int CONNECTION_POOL_MAX_SIZE = 8;
+
+} // namespace config
